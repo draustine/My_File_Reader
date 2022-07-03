@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My File Reader</string>
+    <string name="check_button">CHECK</string>
+    <string name="send_button">SEND</string>
+    <string name="display">Message Content</string>
+    <string name="sms_cost_label">Unit Cost of SMS</string>
+    <string name="total_cost_of_sms">0</string>
+    <string name="unit_cost_of_sms">4</string>
+
+</resources>
