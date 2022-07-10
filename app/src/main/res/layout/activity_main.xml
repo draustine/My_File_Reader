@@ -34,12 +34,16 @@
 
     <TextView
         android:id="@+id/display"
-        android:layout_width="354dp"
-        android:layout_height="474dp"
+        android:layout_width="379dp"
+        android:layout_height="547dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="#BF6666"
         android:backgroundTint="#DFB8B8"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
         android:scrollbars="vertical"
         android:text="@string/display"
         android:textSize="18sp"
