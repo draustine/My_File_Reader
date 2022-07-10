@@ -10,6 +10,7 @@ import android.telephony.SmsManager;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -79,8 +80,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-
+        // Convert count to String and display it
+        String countString = String.valueOf(count);
+        Toast.makeText(this, countString + " Messages Sent", Toast.LENGTH_LONG).show();
     }
 
 
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         //SmsManager smsManager = context.getSystemService(SmsManager.class);
 
         smsManager.sendTextMessage(phone, null, message, null, null);
-        //Toast.makeText(this, "Message Sent", Toast.LENGTH_SHORT).show();
+
     }
 
     private void composeMessages()throws IOException{
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         int smsSize = 160;
 
 
-        // Cycle through beneficiaries an extract ones with birthdays on the day
+        // Cycle through beneficiaries and extract ones with birthdays on the day
         int count = 0;
         int age;
         String ageOrd;
