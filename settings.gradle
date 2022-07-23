@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "My File Reader"
 include ':app'
+
+include ':dropboxChooserSDK'
+include ':dropboxChooserSDK'
