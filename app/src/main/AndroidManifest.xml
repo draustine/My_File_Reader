@@ -4,6 +4,7 @@
     package="com.draustine.myfilereader">
 
     <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -26,5 +27,8 @@
             </intent-filter>
         </activity>
     </application>
+    <queries>
+        <package android:name="com.dropbox.android" />
+    </queries>
 
 </manifest>

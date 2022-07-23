@@ -16,6 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.dropbox.core.DbxException;
+import com.dropbox.core.v1.DbxPathV1;
+import com.dropbox.core.v2.DbxClientV2;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +29,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView unitCost;
     private TextView totalCost;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         textView.setMovementMethod(new ScrollingMovementMethod());
         unitCost = findViewById(R.id.unitSmsCost);
         totalCost = findViewById(R.id.totalSmsCost);
-    }
 
+    }
 
 
     public void send_messages(View view) throws IOException {
@@ -58,23 +65,23 @@ public class MainActivity extends AppCompatActivity {
         String phone;
         String message;
         count = messageList.size();
-        if(count == 0) {
+        if (count == 0) {
             composeMessages();
             count = messageList.size();
         }
-        if(count != 0) {
+        if (count != 0) {
             //textView.setText(String.valueOf(count));
-            for(int i = 0; i < count; i ++){
+            for (int i = 0; i < count; i++) {
                 String member = messageList.get(i);
                 String[] members = member.split("@");
                 phone = members[0];
                 message = members[1];
 
                 sendTheMessage(phone, message);
-                if(i == 0){
+                if (i == 0) {
                     sendTheMessage("131", "EOCNOFF");
                     sendTheMessage("3036", "ACN OFF");
-                }else if(i == count - 1){
+                } else if (i == count - 1) {
                     sendTheMessage("131", "EOCNON");
                     sendTheMessage("3036", "ACN ON");
                 }
@@ -95,15 +102,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    private void sendTheMessage(String phone, String message){
+    private void sendTheMessage(String phone, String message) {
         //SmsManager smsManager = context.getSystemService(SmsManager.class);
 
         smsManager.sendTextMessage(phone, null, message, null, null);
 
     }
 
-    private void composeMessages()throws IOException{
+    private void composeMessages() throws IOException {
         getTheReaders();
 
         Integer smsCount = 0;
@@ -117,37 +123,37 @@ public class MainActivity extends AppCompatActivity {
         String ageOrd;
         //String cDate;
         String iDate;
-        String txt ;
+        String txt;
         Date date = new Date();
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int year  = localDate.getYear();
+        int year = localDate.getYear();
         int month = localDate.getMonthValue(), cMonth, fMonth = 0;
-        int day   = localDate.getDayOfMonth(), cDay, fDay = 0;
+        int day = localDate.getDayOfMonth(), cDay, fDay = 0;
         iDate = Numbers.getOrdinal(day) + " day of " + MonthName.getMonthName(month) + " " + year;
 
         String benLine;
         StringBuilder tempstr = new StringBuilder("Clients with birthday on " + iDate);
         //Cycle through the list of clients with upcoming birthdays
         int bCount = 0;
-        while((benLine = beneficiaries.readLine()) != null){
+        while ((benLine = beneficiaries.readLine()) != null) {
             bCount++;
             String[] contents = benLine.split("@");
-            if(bCount == 1){
+            if (bCount == 1) {
                 //Get the day and month file was composed
-                fMonth =Integer.parseInt(contents[0]);
+                fMonth = Integer.parseInt(contents[0]);
                 fDay = Integer.parseInt(contents[1]);
-            }else{
+            } else {
                 //Split each line and check for equality of day and month
                 cDay = Integer.parseInt(contents[3]);
                 cMonth = Integer.parseInt(contents[2]);
                 age = Integer.parseInt(contents[4]);
-                if(!(cDay == fDay && cMonth == fMonth)){
+                if (!(cDay == fDay && cMonth == fMonth)) {
                     age = age + 1;
                 }
                 ageOrd = Numbers.getOrdinal(age);
 
                 //cDate = Numbers.getOrdinal(cDay) + " day of " + MonthName.getMonthName(cMonth) + " " + String.valueOf(year);
-                if(cDay == day && cMonth == month) {
+                if (cDay == day && cMonth == month) {
                     count++;
                     txt = template.get(0) + " " + contents[0] + template.get(1) + "\n";
                     txt = txt + template.get(2) + " " + ageOrd + " " + template.get(3) + "\n";
@@ -156,12 +162,12 @@ public class MainActivity extends AppCompatActivity {
                     //Add to the messaging list
                     messageList.add(contents[1] + "@" + txt);
                     smsLenght = txt.length();
-                    if(smsLenght <= smsSize){
+                    if (smsLenght <= smsSize) {
                         smsCount = smsCount + 1;
-                    }else if(smsLenght % smsSize > 0){
-                        smsCount = smsCount + 1 + (int)(smsLenght/smsSize);
-                    }else{
-                        smsCount = smsCount + (int)(smsLenght/smsSize);
+                    } else if (smsLenght % smsSize > 0) {
+                        smsCount = smsCount + 1 + (int) (smsLenght / smsSize);
+                    } else {
+                        smsCount = smsCount + (int) (smsLenght / smsSize);
                     }
                 }
 
@@ -175,13 +181,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private InputStream getTheFile(int path) throws Resources.NotFoundException {
         InputStream thisInput = null;
         try {
             thisInput = getResources().openRawResource(path);
 
-        }catch(Resources.NotFoundException rnf){
+        } catch (Resources.NotFoundException rnf) {
             rnf.printStackTrace();
         }
         return thisInput;
@@ -198,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
             //cInput = getResources().openRawResource(R.raw.upcoming_birthdays);
             InputStreamReader isr = new InputStreamReader(cInput);
             beneficiaries = new BufferedReader(isr);
+            get_list_of_beneficiaries();
 
 
             // Get the reader for message template
@@ -209,10 +215,9 @@ public class MainActivity extends AppCompatActivity {
             while ((line = messageTemplate.readLine()) != null) {
                 template.add(line);
             }
-        }catch(IOException e){
+        } catch (IOException | DbxException e) {
             e.printStackTrace();
         }
-
 
 
     }
@@ -220,5 +225,20 @@ public class MainActivity extends AppCompatActivity {
     public void compose_messages(View view) throws IOException {
         getPermission();
         composeMessages();
+    }
+
+    private void get_list_of_beneficiaries() throws DbxException {
+        try {
+            DbxClientV2 client = DropBoxConnect.getClient();
+
+            String path = "\\Public\\Upcoming Birthdays.txt";
+            //FullAccount account = client.users().getCurrentAccount();
+            //String textString = account.getName().getDisplayName();
+            //Toast.makeText(this, textString, Toast.LENGTH_LONG).show();
+            //InputStream in = client.files().download(path).getInputStream();
+            //beneficiaries = new BufferedReader(new InputStreamReader(in));
+        } catch (DbxException e) {
+
+        }
     }
 }
