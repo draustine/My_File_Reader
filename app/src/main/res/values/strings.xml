@@ -6,5 +6,6 @@
     <string name="sms_cost_label">Unit Cost of SMS</string>
     <string name="total_cost_of_sms">0</string>
     <string name="unit_cost_of_sms">4</string>
-    <string name="APP_KEY">hsfmx2327oh2f7d</string>
+    <string name="Beneficialries_List">https://www.dropbox.com/s/7rxxn2vt9eceqbs/Upcoming%20Birthdays.txt?dl=0</string>
+
 </resources>
