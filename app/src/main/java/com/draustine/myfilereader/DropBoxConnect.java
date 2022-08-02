@@ -2,20 +2,17 @@ package com.draustine.myfilereader;
 
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
+import com.dropbox.core.oauth.DbxCredential;
 import com.dropbox.core.v2.DbxClientV2;
 
 
 public class DropBoxConnect {
-    private final static String ACCESS_TOKEN = "sl.BL-NVXkYMUHgMFErlaBfrchEkL-PUAm2pOGcWwCC4y2iEXwudxkWRp8ELvklvLmQ_tiDqD_A-gWDxG6ZmE-fDbVrmuZQS3bDzddqrPaFKCEWvNu4djMe6KKBwHnvdAbwPqfFD6HbQmay";
-    private final static String ACCESS_SECRET = "cyw2edpw31upt9t";
-   // private final static AccessType ACCESS_TYPE = AccessType.DROPBOX;
+    private static final String ACCESS_TOKEN = "sl.BMJmzDGl-DFOhOiuv9-T7hpMIw3CBL3ik21Jr5yf7K94WctgfKkpEC4HL6ttrAW4eD8-oCBF-TgY5eGbw-6dIjrIf3GugAEWxk2bFFmq6rsdlSSSyWYUgvfyhPxNGkMYt_IxoKXsBZak";
 
-    public static DbxClientV2 getClient() throws DbxException {
-        //Auth.startOAuth2Authentication(getApplicationContext(), getString(R.string.APP_KEY));
-        //DbxStreamReader reader = new DbxStreamReader(getInputStream());
+    public static void main(String args[]) throws DbxException {
+        // Create Dropbox client
+        DbxCredential credential = new DbxCredential(ACCESS_TOKEN, 2500L, "en", "hsfmx2327oh2f7d", "cyw2edpw31upt9t");
         DbxRequestConfig config = DbxRequestConfig.newBuilder("dropbox/java-tutorial").build();
-        return new DbxClientV2(config, ACCESS_TOKEN);
+        DbxClientV2 client = new DbxClientV2(config, credential);
     }
-
-
 }
